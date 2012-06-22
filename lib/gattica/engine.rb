@@ -177,7 +177,7 @@ module Gattica
     # Sets up the HTTP headers that Google expects (this is called any time @token is set either by Gattica
     # or manually by the user since the header must include the token)
     def set_http_headers
-      @headers['Authorization'] = "Bearer #{@token}"
+      @headers['Authorization'] = "GoogleLogin auth=#{@token}"
     end
 
 
