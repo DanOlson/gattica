@@ -2,7 +2,7 @@ module Gattica
   class Auth
     include Convertible
 
-    SCRIPT_NAME = '/accounts/ClientLogin'
+    SCRIPT_NAME = 'https://accounts.google.com/o/oauth2/token'
     HEADERS = { 'Content-Type' => 'application/x-www-form-urlencoded', 'User-Agent' => 'Ruby Net::HTTP' }   # Google asks that you be nice and provide a user-agent string
     OPTIONS = { :source => 'gattica', :service => 'analytics' }                                    # Google asks that you provide the name of your app as a 'source' parameter in your POST
 
@@ -10,7 +10,14 @@ module Gattica
   
     # Try to authenticate the user
     def initialize(http, user)
-      options = OPTIONS.merge(user.to_h)
+      test_opts = {
+        :client_id      => '347535700806.apps.googleusercontent.com',
+        :client_secret  => 'Ho_GaHMD0AJRZ644RVlRP5RS',
+        :redirect_uri   => 'http://www.211.mn/oauth2callback',
+        :grant_type     => 'authorization_code'
+      }
+      # options = OPTIONS.merge(user.to_h)
+      options = OPTIONS.merge(test_opts)
       options.extend HashExtensions
       
       response = http.post(SCRIPT_NAME, options.to_query, HEADERS)
